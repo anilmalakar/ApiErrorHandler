@@ -12,6 +12,9 @@ using MongoDB.Driver;
 
 namespace ApiErrorHandler.Controllers
 {
+    /// <summary>
+    /// Error Controller is used to get the Error collection from mongo db and pass it on to view.
+    /// </summary>
     public class ErrorController : BaseResponseController
     {
         private readonly IBaseRepository<ErrorEntity> _errorRepository;
@@ -37,12 +40,7 @@ namespace ApiErrorHandler.Controllers
            
             return recentErrors;
         }
-        // GET: api/Error/5
-        public string Get(int id)
-        {
-            return "value";
-        }
-
+     
         [Route("api/AddError")]
         [HttpPost]
         public HttpResponseMessage Add(HttpRequestMessage request, [FromBody] ErrorEntity errorEntity)
@@ -50,7 +48,6 @@ namespace ApiErrorHandler.Controllers
             return CaptureResponseMessage(request, () =>
             {
                 HttpResponseMessage response = null;
-                errorEntity = null;
                 _errorRepository.Add(errorEntity, "Errors");
                 response = request.CreateResponse(HttpStatusCode.OK, errorEntity);
 
@@ -59,16 +56,6 @@ namespace ApiErrorHandler.Controllers
         }
         // POST: api/Error
         public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT: api/Error/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE: api/Error/5
-        public void Delete(int id)
         {
         }
     }

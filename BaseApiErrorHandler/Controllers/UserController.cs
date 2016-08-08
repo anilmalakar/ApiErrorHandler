@@ -1,4 +1,5 @@
-﻿using ApiErrorHandler.Models;
+﻿using System;
+using ApiErrorHandler.Models;
 using ApiErrorHandler.Repository;
 using System.Collections.Generic;
 using System.Net;
@@ -10,6 +11,9 @@ using MongoDB.Driver;
 
 namespace ApiErrorHandler.Controllers
 {
+    /// <summary>
+    /// Helping class just to register the errors
+    /// </summary>
     public class UserController : BaseResponseController
     {
         private readonly IBaseRepository<UserEntity> _userRepository;
@@ -25,16 +29,6 @@ namespace ApiErrorHandler.Controllers
         {
             _userRepository = new BaseRepository<UserEntity>();
         }
-
-        //[Route("api/Users")]
-        //public async Task<IEnumerable<UserEntity>> GetErrors()
-        //{
-        //    var recentUsers = await _userRepository.Get("Users").Find(new BsonDocument())
-        //        .Sort(Builders<UserEntity>.Sort.Ascending("CreatedDate"))
-        //        .Limit(10).ToListAsync();
-
-        //    return recentUsers;
-        //}
 
         [Route("api/Users")]
         public HttpResponseMessage Users(HttpRequestMessage request)
@@ -60,7 +54,7 @@ namespace ApiErrorHandler.Controllers
                 responseMessage = request.CreateErrorResponse(HttpStatusCode.BadGateway, "No Accsess");
                 int i = 10;
                 int j = 0;
-                int result = i/j;
+                int result = i/j; // this line to throw exception
                 return responseMessage;
             });
         }
@@ -73,22 +67,32 @@ namespace ApiErrorHandler.Controllers
             return CaptureResponseMessage(request, () =>
             {
                 HttpResponseMessage response = null;
-              //  var userEntity = new UserEntity { FirstName = "Test_FirstName1", LastName = "Test_LaststName1" };
-                _userRepository.Add(userEntity, "Users");
+               _userRepository.Add(userEntity, "Users");
                 response = request.CreateResponse(HttpStatusCode.OK, userEntity);
 
                 return response;
             });
         }
 
-        // PUT: api/Error/5
-        public void Put(int id, [FromBody] string value)
+        /// <summary>
+        /// This method is to record the error
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="userEntity"></param>
+        /// <returns></returns>
+        [Route("api/AddUserError")]
+        [HttpPost]
+        public HttpResponseMessage AddUserError(HttpRequestMessage request, [FromBody] UserEntity userEntity)
         {
-        }
-
-        // DELETE: api/Error/5
-        public void Delete(int id)
-        {
+            return CaptureResponseMessage(request, () =>
+            {
+                HttpResponseMessage response = null;
+                userEntity = null;
+                _userRepository.Add(userEntity, "Users");
+                response = request.CreateResponse(HttpStatusCode.OK, userEntity);
+                
+                return response;
+            });
         }
     }
 }

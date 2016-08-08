@@ -7,6 +7,9 @@ using ApiErrorHandler.Repository;
 
 namespace ApiErrorHandler.Controllers
 {
+    /// <summary>
+    /// BaseClass for Api controller to facilitate the exception at one place
+    /// </summary>
     public class BaseResponseController : ApiController
     {
         protected readonly IBaseRepository<ErrorEntity> _repository;
@@ -21,7 +24,13 @@ namespace ApiErrorHandler.Controllers
             _repository = new BaseRepository<ErrorEntity>();
         }
 
-      protected HttpResponseMessage CaptureResponseMessage(HttpRequestMessage request, Func<HttpResponseMessage> errorFunc)
+        /// <summary>
+        ///  base class method to capture the response message
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="errorFunc"></param>
+        /// <returns></returns>
+        protected HttpResponseMessage CaptureResponseMessage(HttpRequestMessage request, Func<HttpResponseMessage> errorFunc)
         {
             HttpResponseMessage errorResponseMessage = null;
 
@@ -37,6 +46,10 @@ namespace ApiErrorHandler.Controllers
             return errorResponseMessage;
         }
 
+        /// <summary>
+        /// Method to log the exception message
+        /// </summary>
+        /// <param name="exception"></param>
         private void LogErrorMessage(Exception exception)
         {
             var err = new ErrorEntity
