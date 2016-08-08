@@ -1,0 +1,16 @@
+﻿<script type="text/javascript" src="~/Scripts/angular.js"></script>
+<script type="text/javascript" src="~/Scripts/apiErrorJs/app.js"></script>
+<script type="text/javascript" src="~/Scripts/apiErrorJs/serviceHelper.js"></script>
+<script type="text/javascript" src="~/Scripts/apiErrorJs/apiErrorController.js"></script>
+<script src="~/Scripts/ui-grid.js"></script>
+<link href="~/Content/ui-grid.css" rel="stylesheet" />
+<div ng-app="errorApp" ng-controller="errorController">
+    <br>
+    <div class="row">
+        <div class="active">
+            <p>This Web Page can be used to see errors registered by API error handler in mongo db</p>
+        </div>
+
+        <div ui-grid="{data : errors}" class="errorGrid"></div>
+    </div>
+</div>
