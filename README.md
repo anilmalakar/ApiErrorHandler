@@ -23,4 +23,4 @@ Close command prompt.
 14.	Refresh web application page. You can see error added to it.
 15.	Now add a post request using fiddler. First add a legitimate user using endpoint http://localhost: port/api/AddUser and RequestBody : {'FirstName' : 'FirstTestName' , 'LastName' : 'lastTestName'}
 16.	Now add an error using below endpoint : http://localhost:port/api/AddUserError with RequestBody : {null}  [Even if you pass correct value, code is marking it null]
-17.	Now if you to application home page and refresh, you can see error recorded and displayed in grid.
+17.	Now if you go to application home page and refresh, you can see error recorded and displayed in grid.
